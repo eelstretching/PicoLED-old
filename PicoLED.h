@@ -56,11 +56,18 @@
 #define FL_PGM_READ_WORD_NEAR(x)  (*((const uint16_t*)(x)))
 #define FL_PGM_READ_DWORD_NEAR(x) (*((const uint32_t*)(x)))
 
+/// WS2811 controller class @ 800 KHz.
+/// @copydetails WS2812Controller800Khz
+template <uint8_t DATA_PIN, EOrder RGB_ORDER = RGB>
+class WS2811Controller800Khz : public ClocklessController<DATA_PIN, 3 * FMUL, 4 * FMUL, 3 * FMUL, RGB_ORDER> {};
+
 /// WS2812 controller class @ 800 KHz.
 /// @tparam DATA_PIN the data pin for these LEDs
 /// @tparam RGB_ORDER the RGB ordering for these LEDs
 template <uint8_t DATA_PIN, EOrder RGB_ORDER = RGB>
 class WS2812Controller800Khz : public ClocklessController<DATA_PIN, 2 * FMUL, 5 * FMUL, 3 * FMUL, RGB_ORDER> {};
+
+template<uint8_t DATA_PIN, EOrder RGB_ORDER> class WS2811 : public WS2811Controller800Khz<DATA_PIN, RGB_ORDER> {};               ///< @copydoc WS2811Controller800Khz
 
 /// LED controller for WS2812 LEDs with GRB color order
 /// @see WS2812Controller800Khz
